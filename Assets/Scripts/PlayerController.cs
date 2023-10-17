@@ -49,6 +49,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void OnRespawn()
+    {
+        rb.position = Vector3.zero;
+        rb.velocity = Vector3.zero;
+
+        movementX = 0;
+        movementY = 0;
+        movementZ = 0;
+    }
+
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
@@ -58,12 +68,6 @@ public class PlayerController : MonoBehaviour
             winTextObject.SetActive(true);
         }
     }
-
-    /*private void FixedUpdate()
-    {
-        Vector3 movement = new Vector3(movementX, movementY, movementZ);
-        rb.AddForce(movement * speed);
-    }*/
 
     void FixedUpdate()
     {
@@ -75,15 +79,16 @@ public class PlayerController : MonoBehaviour
 
         Vector2 horizontalVelocity = new Vector2(velocity.x, velocity.z);
 
-        if(horizontalVelocity.magnitude > maxSpeed)
+        if (horizontalVelocity.magnitude > maxSpeed)
         {
             Vector2 clampedVelocity = horizontalVelocity.normalized * maxSpeed;
             rb.velocity = new Vector3(clampedVelocity.x, velocity.y, clampedVelocity.y);
         }
 
-        Debug.Log("The current speed is " + horizontalVelocity.magnitude.ToString());
-
-
+        if (rb.position.y < -2)
+        {
+            OnRespawn();
+        }
     }
 
     void OnTriggerEnter(Collider other)
