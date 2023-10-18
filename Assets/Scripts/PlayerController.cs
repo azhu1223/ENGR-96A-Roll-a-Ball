@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
     private int count;
+    private float sin45 = Mathf.Sin(Mathf.PI / 4);
     private float movementX;
     private float movementZ;
     private float movementY;
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 0;
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
+    public GameObject bullet;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +43,7 @@ public class PlayerController : MonoBehaviour
 
         if(Physics.Raycast(rb.position, Vector3.down, out hitData, 1))
         {
-            if(hitData.transform.CompareTag("Ground") && Mathf.Abs(Vector3.Dot(hitData.normal, Vector3.down)) > 0.707)
+            if(hitData.transform.CompareTag("Ground") && Mathf.Abs(Vector3.Dot(hitData.normal, Vector3.down)) > sin45)
             {
                 movementY = 1;
                 rb.AddForce(Vector3.up * jumpStrength);
@@ -99,5 +101,20 @@ public class PlayerController : MonoBehaviour
             count++;
             SetCountText();
         }
+    }
+
+    public Vector3 GetPosition()
+    {
+        return rb.position;
+    }
+
+    public Vector3 GetDirection()
+    {
+        return transform.forward;
+    }
+
+    public void OnFire()
+    {
+        Instantiate(bullet, rb.position + transform.forward, transform.rotation);
     }
 }

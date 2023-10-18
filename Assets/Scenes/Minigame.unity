@@ -2179,6 +2179,7 @@ MonoBehaviour:
   maxSpeed: 5
   countText: {fileID: 264221047}
   winTextObject: {fileID: 1420055877}
+  bullet: {fileID: 1656609330752241992, guid: cac379c7a50799a4e92fd183946fa915, type: 3}
 --- !u!114 &1337818807
 MonoBehaviour:
   m_ObjectHideFlags: 0
